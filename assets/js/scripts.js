@@ -13,42 +13,43 @@ addEventListeners();
 function addEventListeners() {
     btnReset.addEventListener('click', (evt) => resetCalculator());
 
+    // Submit to active new width and height fields
     btnSubmit.addEventListener('click', (evt) => {
         calcNew.classList.add('d-none');
 
         if (tbWidth.value && tbHeight.value) {
             calcNew.classList.remove('d-none');
-            disableWidthHeight();
+            inputsDisabled(true);
         }
     });
   
+    // New width field listener while typing
     tbWidthNew.addEventListener('keyup', (evt) => {
         isWidthNew = true;
         calculate();
     });
 
+    // New height field listener while typing
     tbHeightNew.addEventListener('keyup', (evt) => {
         isWidthNew = false;
         calculate();
     });
 }
 
+// Reset calculator to clear all fields and hide new fields
 function resetCalculator() {
     textFields.forEach((tb) => tb.value = '');
     calcNew.classList.add('d-none');
-    enableWidthHeight();
+    inputsDisabled(false);
 }
 
-function disableWidthHeight() {
-    tbWidth.disabled = true;
-    tbHeight.disabled = true;
+// Update the input disabled status on width and height fields
+function inputsDisabled(status) {
+    tbWidth.disabled = status;
+    tbHeight.disabled = status;
 }
 
-function enableWidthHeight() {
-    tbWidth.disabled = false;
-    tbHeight.disabled = false;
-}
-
+// Run proportion formula on new width and height input changes
 function calculate() {
     if (isWidthNew) {
         tbHeightNew.value = (tbWidthNew.value * tbHeight.value) / tbWidth.value;
