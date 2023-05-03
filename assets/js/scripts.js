@@ -52,9 +52,16 @@ function inputsDisabled(status) {
 // Run proportion formula on new width and height input changes
 function calculate() {
     if (isWidthNew) {
-        tbHeightNew.value = (tbWidthNew.value * tbHeight.value) / tbWidth.value;
+        const height = (tbWidthNew.value * tbHeight.value) / tbWidth.value;
+        tbHeightNew.value = roundUp(height); 
     }
     else {
-        tbWidthNew.value = (tbHeightNew.value * tbWidth.value) / tbHeight.value;
+        const width = (tbHeightNew.value * tbWidth.value) / tbHeight.value;
+        tbWidthNew.value = roundUp(width); 
     }
+}
+
+// Round up the input value
+function roundUp(val) {
+    return Math.round((val + Number.EPSILON) * 100) / 100;
 }
